@@ -1,9 +1,9 @@
 /*
  * This code is for the bachelor thesis named "Towed-ROV".
  * The purpose is to build a ROV which will be towed behind a surface vessel
- * and act as a multi-sensor platform, were it shall be easy to place new 
+ * and act as a multi-sensor platform, were it shall be easy to place new
  * sensors. There will also be a video stream from the ROV.
- * 
+ *
  * The system consists of two Raspberry Pis in the ROV that is connected to
  * several Arduino micro controllers. These micro controllers are connected to
  * feedback from the actuators, the echo sounder and extra optional sensors.
@@ -22,8 +22,10 @@ import jssc.SerialPortList;
 /**
  * This class is resposible for handling the search for com ports and store a
  * list over them.
- * @author Towed ROV 2019 https://ntnuopen.ntnu.no/ntnu-xmlui/handle/11250/2564356
- * edited 2020 added another serial connection
+ *
+ * @author Towed ROV 2019
+ * https://ntnuopen.ntnu.no/ntnu-xmlui/handle/11250/2564356 edited 2020 added
+ * another serial connection
  */
 public class SerialDataHandler {
 
@@ -76,7 +78,7 @@ public class SerialDataHandler {
 
         String[] portNames = getAvailableComPorts();
         for (int i = 0; i < portNames.length; i++) {
-            // 
+            //
             if (portNames[i].contains("dev") && !portNames[i].contains("AMA0")) {
                 portNamesList.put(portNames[i], "Unknown");
             }
@@ -119,14 +121,13 @@ public class SerialDataHandler {
                                 //  buffer = buffer.replace("?", "");
                                 String[] data = buffer.split(sep_char);
                                 System.out.println("størrelse data:" + data.length);
-                                for (int i = 0; i < data.length; i++)
-                                {
+                                for (int i = 0; i < data.length; i++) {
                                     System.out.println("data containts: " + data[i]);
                                 }
 
                                 for (int i = 0; i < data.length; i++) {
-                                    if (data[i].contains("Roll") 
-                                            || data [i].contains("IMU")) {
+                                    if (data[i].contains("Roll")
+                                            || data[i].contains("IMU")) {
                                         System.out.println("IMUSDH");
                                         String key = (String) e.getKey();
                                         portNamesList.put(key, "IMU");
@@ -135,12 +136,6 @@ public class SerialDataHandler {
                                         System.out.println("EchoSounderSDH");
                                         String key = (String) e.getKey();
                                         portNamesList.put(key, "EchoSounder");
-                                    }
-                                    if (data[i].contains("ActuatorFBArduino")
-                                            || data[i].contains("PsActuatorFb")) {
-                                        System.out.println("ActuatorArduinoSDH");
-                                        String key = (String) e.getKey();
-                                        portNamesList.put(key, "ActuatorFBArduino");
                                     }
                                     if (data[i].contains("StepperArduino")) {
                                         System.out.println("StepperArduinoSDH");

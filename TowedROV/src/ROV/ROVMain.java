@@ -13,11 +13,11 @@
  */
 package ROV;
 
+import ROV.TCPCom.Server;
 import SerialCom.*;
 import java.util.Map;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 import jssc.SerialPortList;
 
 /**
@@ -31,8 +31,6 @@ import jssc.SerialPortList;
 public class ROVMain {
 
     private final static int serverPort = 8080;
-    private static Thread serialRW;
-    private static Thread I2CComHandler;
 
     static boolean dataIsRecieved = false;
     static boolean testIsDone = false;
@@ -77,13 +75,7 @@ public class ROVMain {
         }
         dh = new Data();
 
-        Logic logic = new Logic(dh);
-        dh.addObserver(logic);
-
         SerialDataHandler sdh = new SerialDataHandler(dh);
-
-        executor.scheduleAtFixedRate(logic,
-                10, 5, TimeUnit.MILLISECONDS);
 
         Server = new Thread(new Server(serverPort, dh));
         Server.start();
@@ -116,14 +108,6 @@ public class ROVMain {
 
             }
 
-            if (comPortValue.contains("ActuatorFBArduino")) {
-                System.out.println("ActuatorArduinoMain");
-                ArduinoActuatorFBThread = new Thread(new ReadSerialData(dh, comPortKey, 38400, comPortValue));
-                ArduinoActuatorFBThread.start();
-                ArduinoActuatorFBThread.setName(comPortValue);
-                System.out.println("ActuatorFBArduino found");
-
-            }
             if (comPortValue.contains("StepperArduino")) {
                 System.out.println("StepperArduinoMain");
                 StepperArduinoThread = new Thread(new ReadSerialData(dh, comPortKey, 57600, comPortValue));

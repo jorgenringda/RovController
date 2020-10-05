@@ -1,9 +1,9 @@
 /*
  * This code is for the bachelor thesis named "Towed-ROV".
  * The purpose is to build a ROV which will be towed behind a surface vessel
- * and act as a multi-sensor platform, were it shall be easy to place new 
+ * and act as a multi-sensor platform, were it shall be easy to place new
  * sensors. There will also be a video stream from the ROV.
- * 
+ *
  * The system consists of two Raspberry Pis in the ROV that is connected to
  * several Arduino micro controllers. These micro controllers are connected to
  * feedback from the actuators, the echo sounder and extra optional sensors.
@@ -13,17 +13,19 @@
  */
 package SerialCom;
 
+import ROV.Data;
 import java.util.HashMap;
 import java.util.Map;
 import jssc.SerialPort;
 import jssc.SerialPortException;
-import ROV.Data;
 
 /**
  * This class is eespnsible for reading serial data from the IMU, echo sounder
  * and the Arduino I/O
- *@author Towed ROV 2019 https://ntnuopen.ntnu.no/ntnu-xmlui/handle/11250/2564356
- * edited 2020, added feedback from stepperPos to the switch case
+ *
+ * @author Towed ROV 2019
+ * https://ntnuopen.ntnu.no/ntnu-xmlui/handle/11250/2564356 edited 2020, added
+ * feedback from stepperPos to the switch case
  *
  */
 public class ReadSerialData implements Runnable {
@@ -34,7 +36,7 @@ public class ReadSerialData implements Runnable {
     int stepperFbFilterStorage = 0;
 
     int stepperFbFilterCounter = 0;
-    
+
     boolean portIsOpen = false;
     String comPort = "";
     String myName = "";
@@ -96,9 +98,9 @@ public class ReadSerialData implements Runnable {
             try {
                 serialPort.openPort();
                 portIsOpen = true;
-                if (myName.contains("StepperArduino")){
-                data.setSerialPortStepper(serialPort);
-            }
+                if (myName.contains("StepperArduino")) {
+                    data.setSerialPortStepper(serialPort);
+                }
             } catch (SerialPortException ex) {
                 System.out.println(ex);
             }
@@ -147,7 +149,7 @@ public class ReadSerialData implements Runnable {
 
 //            if (elapsedTimer != 0)
 //            {
-//                
+//
 //                System.out.println("Data is recieved in: " + elapsedTimer + " millis"
 //                        + " or with: " + 1000 / elapsedTimer + " Hz");
 //            } else
@@ -170,19 +172,17 @@ public class ReadSerialData implements Runnable {
             switch (key) {
                 case "fb_stepperPos":
                     int positionValue = Integer.parseInt(value);
-                        data.setFb_stepperPos(positionValue);
+                    data.setFb_stepperPos(positionValue);
                     break;
-                    
-                    
+
                 case "D":
                     double doubleValue = Double.parseDouble(value) * -1;
                     data.setFb_depthBeneathROV(doubleValue);
                     break;
-                    
+
 //                case "DBT":
 //                    data.setFb_depthBelowTransduser(Double.parseDouble(value));
 //                    break;
-                    
                 case "ch1":
                     data.setAnalogInputChannel_1(Double.parseDouble(value));
                     break;
@@ -204,7 +204,7 @@ public class ReadSerialData implements Runnable {
                         data.setDigitalInputChannel_4(false);
                     }
                     break;
-                    
+
                 case "Roll":
                     data.setFb_rollAngle(Double.parseDouble(value));
                     //setRoll(Integer.parseInt(value));
@@ -228,7 +228,4 @@ public class ReadSerialData implements Runnable {
             }
         }
     }
-    }
-
-
-
+}
