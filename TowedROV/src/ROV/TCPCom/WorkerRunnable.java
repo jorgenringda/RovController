@@ -105,19 +105,19 @@ public class WorkerRunnable implements Runnable {
                         switch (key) {
                             //Commands
                             case "cmd_resetSteppers":
-                                dh.setDataToSerial("r");
+                                dh.setDataToSerial("reset_0");
                                 System.out.println("reset steppers");
                                 outToClient.println("Server: OK");
                                 break;
                             case "cmd_stepperManualUp":
                                 this.manualPos = manualPos + 50;
-                                dh.setDataToSerial(Integer.toString(manualPos));
+                                dh.setDataToSerial("manUp_" + Integer.toString(manualPos));
                                 System.out.println("moving actuator up: " + value);
                                 outToClient.println("Server: OK");
                                 break;
                             case "cmd_stepperManualDown":
                                 this.manualPos = manualPos - 50;
-                                dh.setDataToSerial(Integer.toString(manualPos));
+                                dh.setDataToSerial("manDown_" + Integer.toString(manualPos));
                                 System.out.println("moving actuator down: " + value);
                                 outToClient.println("Server: OK");
                                 break;
@@ -128,42 +128,46 @@ public class WorkerRunnable implements Runnable {
                                 break;
 
                             case "cmd_targetDistance":
+                                dh.setDataToSerial("Setpoint_" + Double.toString(Double.valueOf(value)));
                                 dh.setCmd_targetDistance(Double.valueOf(value));
                                 outToClient.println("Server: OK");
                                 break;
 
                             case "cmd_pid_p":
+                                dh.setDataToSerial("P_" + Double.toString(Double.valueOf(value)));
                                 dh.setCmd_pid_p(Double.valueOf(value));
 //                                System.out.println("Pid_p is: " + dh.getCmd_pid_p());
                                 outToClient.println("Server: OK");
                                 break;
 
                             case "cmd_pid_i":
+                                dh.setDataToSerial("I_" + Double.toString(Double.valueOf(value)));
                                 dh.setCmd_pid_i(Double.valueOf(value));
 //                                System.out.println("Pid_i is: " + dh.getCmd_pid_i());
                                 outToClient.println("Server: OK");
                                 break;
 
                             case "cmd_pid_d":
+                                dh.setDataToSerial("D_" + Double.toString(Double.valueOf(value)));
                                 dh.setCmd_pid_d(Double.valueOf(value));
 //                                System.out.println("Pid_d is: " + dh.getCmd_pid_d());
                                 outToClient.println("Server: OK");
                                 break;
 
                             case "cmd_pid_gain":
+                                dh.setDataToSerial("PIDgain_" + Double.toString(Double.valueOf(value)));
                                 dh.setCmd_pid_gain(Double.valueOf(value));
 //                                System.out.println("Pid_gain is: " + dh.getCmd_pid_gain());
                                 outToClient.println("Server: OK");
                                 break;
 
                             case "cmd_emergencySurface":
-                                dh.setCmd_emergencySurface(parseStringToBoolean(value));
-                                System.out.println("EmergencySurface is: " + dh.isCmd_emergencySurface());
+                                dh.setDataToSerial("emergency_0");
                                 outToClient.println("Server: OK");
                                 break;
 
                             case "cmd_rovDepth":
-                                dh.setCmd_currentROVdepth(Double.valueOf(value));
+                                dh.setDataToSerial("Depth_" + Double.toString(Double.valueOf(value)));
                                 outToClient.println("Server: OK");
                                 break;
 
@@ -177,10 +181,11 @@ public class WorkerRunnable implements Runnable {
                                 break;
 
                             case "cmd_offsetDepthBeneathROV":
-                                dh.setCmd_offsetDepthBeneathROV(Double.valueOf(value));
+                                dh.setDataToSerial("Offset-seafloor_" + Double.toString(Double.valueOf(value)));
                                 outToClient.println("Server: OK");
                                 break;
                             case "cmd_offsetROVdepth":
+                                dh.setDataToSerial("Offset-depth_" + Double.toString(Double.valueOf(value)));
                                 dh.setCmd_offsetROVdepth(Double.valueOf(value));
                                 outToClient.println("Server: OK");
                                 break;

@@ -151,6 +151,7 @@ public class Data extends Observable {
      */
     public void setFb_depthBeneathROV(double fb_depthBeneathROV) {
         this.fb_depthBeneathROV = fb_depthBeneathROV;
+        setDataToSerial("Depth-seafloor_" + fb_depthBeneathROV);
     }
 
     /**
@@ -270,6 +271,7 @@ public class Data extends Observable {
      */
     public double getFb_pitchAngle() {
         return fb_pitchAngle + getCmd_imuCalibratePitch();
+
     }
 
     /**
@@ -279,9 +281,8 @@ public class Data extends Observable {
      *
      */
     public void setFb_pitchAngle(double fb_pitchAngle) {
-//        setChanged();
-//        notifyObservers();
         this.fb_pitchAngle = fb_pitchAngle;
+        setDataToSerial("Pitch_" + fb_pitchAngle);
     }
 
     /**
@@ -300,9 +301,8 @@ public class Data extends Observable {
      * @param fb_rollAngle the roll angle of the ROV
      */
     public void setFb_rollAngle(double fb_rollAngle) {
-//        setChanged();
-//        notifyObservers();
         this.fb_rollAngle = fb_rollAngle;
+        setDataToSerial("Roll_" + fb_pitchAngle);
     }
 
     /**
@@ -467,9 +467,7 @@ public class Data extends Observable {
      */
     public void setCmd_currentROVdepth(double cmd_currentROVdepth) {
         this.cmd_currentROVdepth = cmd_currentROVdepth + cmd_offsetDepthBeneathROV;
-        setChanged();
-        notifyObservers();
-
+        setDataToSerial("Depth_" + cmd_currentROVdepth);
     }
 
     /**
@@ -605,8 +603,6 @@ public class Data extends Observable {
      * @return the ROV ready value
      */
     public boolean getFb_ROVReady() {
-//        setChanged();
-//        notifyObservers();
         return fb_ROVReady;
     }
 
@@ -798,8 +794,6 @@ public class Data extends Observable {
      * @param fb_stepperPos the PS actuator position
      */
     public void setFb_stepperPos(int fb_stepperPos) {
-//        setChanged();
-//        notifyObservers();
         this.fb_stepperPos = fb_stepperPos + STEPPER_ANGLEADJUST;
     }
 

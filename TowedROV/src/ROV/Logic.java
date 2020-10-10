@@ -33,8 +33,6 @@ public class Logic implements Runnable {
 
     Data data = null;
 
-    int old_cmd_BlueLED = 0;
-
     double elapsedTimer = 0;
     double elapsedTimerNano = 0;
     long lastTime = 0;
