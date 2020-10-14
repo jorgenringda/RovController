@@ -90,6 +90,7 @@ public class Server implements Runnable {
     private void openServerSocket() {
         try {
             this.serverSocket = new ServerSocket(this.serverPort);
+            System.out.println("port open");
         } catch (IOException e) {
             throw new RuntimeException("Cannot open port 8080", e);
         }

@@ -30,7 +30,7 @@ import jssc.SerialPortList;
  */
 public class ROVMain {
 
-    private final static int serverPort = 8080;
+    private final static int serverPort = 8088;
 
     static boolean dataIsRecieved = false;
     static boolean testIsDone = false;
@@ -80,6 +80,7 @@ public class ROVMain {
         Server = new Thread(new Server(serverPort, dh));
         Server.start();
         Server.setName("Server");
+
         int inputData = 0;
         if (!foundComPort) {
             System.out.println("Searching for com ports...");

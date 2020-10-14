@@ -117,7 +117,7 @@ public class ReadSerialData implements Runnable {
             try {
                 serialPort.setParams(baudRate, 8, 1, 0);
                 buffer = serialPort.readString();
-
+                System.out.println(buffer);
                 // System.out.println(buffer);
                 boolean dataNotNull = false;
                 boolean dataHasFormat = false;
@@ -165,6 +165,7 @@ public class ReadSerialData implements Runnable {
     }
 
     private void sendIncommingDataToDataHandler() {
+        System.out.println(incommingData);
         for (Map.Entry e : incommingData.entrySet()) {
             String key = (String) e.getKey();
             String value = (String) e.getValue();
@@ -176,7 +177,7 @@ public class ReadSerialData implements Runnable {
                     break;
 
                 case "D":
-                    double doubleValue = Double.parseDouble(value) * -1;
+                    double doubleValue = Double.parseDouble(value);
                     data.setFb_depthBeneathROV(doubleValue);
                     break;
 

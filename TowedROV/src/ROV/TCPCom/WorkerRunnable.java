@@ -154,13 +154,6 @@ public class WorkerRunnable implements Runnable {
                                 outToClient.println("Server: OK");
                                 break;
 
-                            case "cmd_pid_gain":
-                                dh.setDataToSerial("PIDgain_" + Double.toString(Double.valueOf(value)));
-                                dh.setCmd_pid_gain(Double.valueOf(value));
-//                                System.out.println("Pid_gain is: " + dh.getCmd_pid_gain());
-                                outToClient.println("Server: OK");
-                                break;
-
                             case "cmd_emergencySurface":
                                 dh.setDataToSerial("emergency_0");
                                 outToClient.println("Server: OK");
